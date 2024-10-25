@@ -96,7 +96,7 @@ const CreateOrder = () => {
           {!position.latitude && !position.longitude && (
             <span className="absolute -top-2 right-0 z-50 sm:top-0.5 sm:mr-[3px] md:right-[5px] md:top-[5px]">
               <button
-                className="rounded bg-orange-100 px-4 py-1 md:py-1.5 font-medium text-orange-600 disabled:opacity-50"
+                className="rounded bg-orange-100 px-4 py-1 font-medium text-orange-600 disabled:opacity-50 md:py-1.5"
                 disabled={isLoadingAddress}
                 onClick={(e) => {
                   e.preventDefault();

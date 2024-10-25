@@ -21,7 +21,7 @@ export const MenuItem = ({ pizza }) => {
     };
     dispatch(addItem(newItem));
   };
-  
+
   return (
     <div className="rounded-lg bg-white p-2 text-center shadow transition-all hover:shadow-lg">
       <img
@@ -33,9 +33,9 @@ export const MenuItem = ({ pizza }) => {
         <h3 className="font-medium">{name}</h3>
 
         {soldOut ? (
-          <p className="text-gray-400">Sold Out!</p>
+          <p className="text-gray-400">Habis!</p>
         ) : (
-          <p className="text-orange-600">{formatCurrency(unitPrice)}</p>
+          <p className="text-gray-400">Ada!</p>
         )}
 
         <p className="line-clamp-1 text-sm opacity-50">
@@ -49,10 +49,10 @@ export const MenuItem = ({ pizza }) => {
 
       {!soldOut && !isInCart && (
         <button
-          className="mt-2 w-full rounded bg-gray-50 py-1 text-gray-600 transition-all hover:bg-gray-100"
+          className="mt-2 w-full rounded bg-slate-600 py-1 text-white transition-all hover:bg-orange-600"
           onClick={addToCart}
         >
-          Add to Cart
+          Tambahkan
         </button>
       )}
     </div>

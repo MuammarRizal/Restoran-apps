@@ -13,27 +13,27 @@ const CreateUser = () => {
     if (!username) return;
 
     dispatch(updateName(username));
-    navigate('/menu')
+    navigate("/menu");
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <p className="mb-4 text-stone-600 md:text-base">
-        👋 Welcome! Please start by telling us your name:
+        👋 Halo, Silahkan masukan nama Anda :
       </p>
 
       <input
         type="text"
-        placeholder="Your full name"
+        placeholder="Nama Lengkap"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        className="mb-4 w-2/3 sm:w-1/2 rounded-md border border-stone-200 p-2 focus:outline-none focus:ring focus:ring-orange-500"
+        className="mb-4 w-2/3 rounded-md border border-stone-200 p-2 focus:outline-none focus:ring focus:ring-orange-500 sm:w-1/2"
       />
 
       {username !== "" && (
         <div>
           <button className="rounded bg-orange-600 px-4 py-2 font-medium text-white">
-            Start ordering
+            Ayo cari menu
           </button>
         </div>
       )}

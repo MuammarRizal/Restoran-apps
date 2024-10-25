@@ -7,11 +7,11 @@ const Home = () => {
 
   return (
     <div className="my-10 px-4 text-center sm:my-16">
-      <h1 className="mb-16 text-3xl sm:text-6xl font-semibold md:text-6xl">
-        The best pizza.
+      <h1 className="mb-16 text-3xl font-semibold sm:text-6xl md:text-6xl">
+        Selamat Datang Di Restaurant
         <br />
         <span className="text-orange-500">
-          Straight out of the oven, straight to you.
+          Pusat Pelatihan Kerja Daerah Jakarta Selatan
         </span>
       </h1>
       {username === "" ? (
