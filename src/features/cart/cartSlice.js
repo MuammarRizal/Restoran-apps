@@ -14,14 +14,11 @@ const cartSlice = createSlice({
     },
     increaseItem: (state, action) => {
       const item = state.cart.find((item) => item.pizzaId === action.payload);
-      
       item.quantity++;
       item.totalPrice = item.quantity * item.unitPrice;
-
     },
     decreaseItem: (state, action) => {
       const item = state.cart.find((item) => item.pizzaId === action.payload);
-
       item.quantity--;
       item.totalPrice = item.quantity * item.unitPrice;
 

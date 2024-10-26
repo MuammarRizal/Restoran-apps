@@ -27,6 +27,7 @@ export async function createOrder(newOrder) {
       },
     });
 
+    console.log()
     if (!res.ok) throw Error();
     const { data } = await res.json();
     return data;
