@@ -19,20 +19,19 @@ const CartCustom = () => {
           <CartItem item={item} key={item.pizzaId} />
         ))}
       </ul>
-      <div className="mt-6 space-x-2">
-        <Link
-          to="/order/new"
-          className="rounded bg-orange-600 px-4 py-2 font-medium text-white"
-        >
-          Pesan
-        </Link>
-
+      <div className="mt-6 flex w-full space-x-2">
         <button
-          className="rounded bg-slate-100 px-4 py-2 font-medium text-slate-600"
+          className="w-full rounded bg-slate-100 px-4 py-2 font-medium text-slate-600"
           onClick={() => dispatch(clearCart())}
         >
           Batal
         </button>
+        <Link
+          to="/order/new"
+          className="w-full rounded bg-orange-600 px-4 py-2 text-center  font-medium text-white"
+        >
+          Pesan
+        </Link>
       </div>
     </div>
   );

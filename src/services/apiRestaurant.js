@@ -21,13 +21,17 @@ export async function createOrder(newOrder) {
   try {
     const res = await fetch(`${API_URL}/order`, {
       method: "POST",
-      body: JSON.stringify(newOrder),
+      body: JSON.stringify({
+        ...newOrder,
+        customer: "wdadwa",
+        phone: "123123",
+        address: "dwadwadwa",
+      }),
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    console.log()
     if (!res.ok) throw Error();
     const { data } = await res.json();
     return data;

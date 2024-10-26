@@ -9,6 +9,8 @@ import {
 } from "../../utils/helpers";
 import UpdateOrder from "./UpdateOrder";
 import { useEffect } from "react";
+import CartCustom from "../cart/CartCustom/CartCustom";
+import TableOrder from "../TableOrder/TableOrder";
 
 const Order = () => {
   const order = useLoaderData();
@@ -43,7 +45,7 @@ const Order = () => {
             <div className="mb-2.5 h-6 w-1/2 rounded-full bg-gray-300 "></div>
             <div className="mb-6 h-2 w-2/3 rounded-full bg-gray-300 "></div>
           </div>
-          <div className="flex-shrink flex-grow flex items-center gap-2 justify-end">
+          <div className="flex flex-shrink flex-grow items-center justify-end gap-2">
             <div className="mb-2.5 h-8 w-24 rounded-lg bg-gray-300 "></div>
             <div className="mb-2.5 h-8 w-24 rounded-lg bg-gray-300 "></div>
           </div>
@@ -112,35 +114,22 @@ const Order = () => {
       <div className="flex flex-wrap items-center justify-between gap-2 bg-stone-200 px-6 py-5">
         <p className="font-medium">
           {deliveryIn >= 0
-            ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
-            : "Order should have arrived"}
+            ? `Pesanan Siap dalam ${calcMinutesLeft(estimatedDelivery)} Menit lagi 😃`
+            : "Pesanan siap diantar"}
         </p>
         <p className="text-xs text-stone-500">
-          (Estimated delivery: {formatDate(estimatedDelivery)})
+          (Perkiraan Selesai : {formatDate(estimatedDelivery)})
         </p>
       </div>
 
       <ul className="dive-stone-200 divide-y border-b border-t">
-        {cart.map((item) => (
-          <OrderItem item={item} key={item.pizzaId} />
-        ))}
+        <TableOrder cart={cart} />
+        {/* <OrderItem item={item} key={item.pizzaId} /> */}
       </ul>
 
       <div className="space-y-2 bg-stone-200 px-6 py-5">
-        <p className="text-sm font-medium text-stone-600">
-          Price pizza: {formatCurrency(orderPrice)}
-        </p>
-        {priority && (
-          <p className="text-sm font-medium text-stone-600">
-            Price priority: {formatCurrency(priorityPrice)}
-          </p>
-        )}
-        <p className="font-bold">
-          To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
-        </p>
+        <p className="font-bold">Mohon Ditunggu! 😃</p>
       </div>
-
-      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 };

@@ -8,13 +8,13 @@ const Menu = () => {
 
   return (
     <>
-      <div className="container flex">
+      <div className="container relative flex">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3">
           {menu.map((item) => (
             <MenuItem key={item.id} pizza={item} />
           ))}
         </div>
-        <div className="container w-[45%]">
+        <div className="container sticky top-0 h-screen w-[45%] overflow-y-auto rounded border border-gray-300 bg-slate-200 shadow-lg">
           <CartCustom />
         </div>
       </div>
