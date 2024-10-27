@@ -9,6 +9,10 @@ import CreateOrder, {
   action as createOrderAction,
 } from "./features/order/CreateOrder.jsx";
 import { action as updateOrderAction } from "./features/order/UpdateOrder";
+import KitchenPage from "./Kitchen/KitchenPage.jsx";
+import Orders from "./Kitchen/components/Orders.jsx";
+import KitchenOrders from "./Kitchen/components/Orders.jsx";
+import MenuKitchen from "./Kitchen/components/Menu.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -33,12 +37,25 @@ function App() {
           element: <CreateOrder />,
           action: createOrderAction,
         },
+
         {
           path: "/order/:orderId",
           element: <Order />,
           loader: orderLoader,
           errorElement: <OrderError />,
           action: updateOrderAction,
+        },
+        {
+          path: "/kitchen",
+          element: <KitchenPage />,
+        },
+        {
+          path: "/kitchen/orders",
+          element: <KitchenOrders />,
+        },
+        {
+          path: "/kitchen/Menu",
+          element: <MenuKitchen />,
         },
       ],
     },
