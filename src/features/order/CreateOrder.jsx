@@ -54,10 +54,14 @@ const CreateOrder = () => {
 export async function action({ request }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
+  const parseData = JSON.parse(data.cart);
+  const cartMenus = Object.values(parseData).filter(
+    (item) => typeof item === "object",
+  );
 
   const order = {
-    ...data,
-    cart: JSON.parse(data.cart),
+    username: parseData.username,
+    cart: cartMenus,
   };
 
   const newOrder = await createOrder(order);

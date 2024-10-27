@@ -25,7 +25,7 @@ export async function createOrder(newOrder) {
     const res = await fetch(`${API_URL}/order`, {
       method: "POST",
       body: JSON.stringify({
-        username: newOrder.cart.username,
+        username: newOrder.username,
         data: newOrder.cart,
       }),
       headers: {
