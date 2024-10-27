@@ -19,7 +19,7 @@ const Header = () => {
       <div className="w-full text-center sm:w-1/2">
         <SearchOrder />
       </div>
-      <div className="flex w-16 items-center justify-end gap-2 sm:w-1/4">
+      <div className="flex w-16 items-center justify-end gap-2 sm:w-1/4 md:hidden">
         <CartOverview />
 
         <FaAddressBook className="text-2xl" />

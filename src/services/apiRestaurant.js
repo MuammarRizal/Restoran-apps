@@ -1,12 +1,15 @@
-const API_URL = "https://react-fast-pizza-api.onrender.com/api";
+import axios from "axios";
+// const API_URL = "https://react-fast-pizza-api.onrender.com/api";
+const API_URL = "http://localhost:5000/api";
 
 export async function getMenu() {
-  const res = await fetch(`${API_URL}/menu`);
+  const res = await fetch(`${API_URL}/menus`);
 
   if (!res.ok) throw Error("Failed getting menu");
 
-  const { data } = await res.json();
-  return data;
+  const { menus } = await res.json();
+
+  return menus;
 }
 
 export async function getOrder(id) {
@@ -22,16 +25,15 @@ export async function createOrder(newOrder) {
     const res = await fetch(`${API_URL}/order`, {
       method: "POST",
       body: JSON.stringify({
-        ...newOrder,
-        customer: "wdadwa",
-        phone: "123123",
-        address: "dwadwadwa",
+        username: newOrder.cart.username,
+        data: newOrder.cart,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
 
+    // console.log(await res.text());
     if (!res.ok) throw Error();
     const { data } = await res.json();
     return data;

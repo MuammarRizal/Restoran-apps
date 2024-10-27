@@ -8,9 +8,9 @@ const TableOrder = ({ cart }) => {
         <thead>
           <tr className="bg-gray-200 text-left text-sm font-semibold uppercase text-gray-700">
             <th className="border-b px-4 py-3">NO</th>
-            <th className="border-b px-4 py-3">ITEM</th>
+            <th className="border-b px-4 py-3">MENU</th>
             <th className="border-b px-4 py-3">Quantity</th>
-            <th className="border-b px-4 py-3">Progress</th>
+            <th className="border-b px-4 py-3">KATEGORI</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +20,9 @@ const TableOrder = ({ cart }) => {
               <td className="border-b px-4 py-3 text-gray-800">{item.name}</td>
               <td className="border-b px-4 py-3 text-gray-800">
                 {item.quantity}
+              </td>
+              <td className="border-b px-4 py-3 text-gray-800">
+                {item.category}
               </td>
             </tr>
           ))}
