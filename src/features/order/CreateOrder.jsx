@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
+import {
+  Form,
+  Link,
+  redirect,
+  useActionData,
+  useNavigation,
+} from "react-router-dom";
 import EmptyCart from "../cart/EmptyCart";
 import { createOrder } from "../../services/apiRestaurant";
 import store from "../../store";
@@ -30,6 +36,12 @@ const CreateOrder = () => {
         Hallo {name}, Apakah Pesanan sudah sesuai ?
       </h2>
 
+      <Link
+        to="/menu"
+        className="rounded-md px-3 py-2 font-medium text-orange-600 transition-all duration-300 ease-in-out hover:bg-orange-600 hover:text-white"
+      >
+        &larr; Back to menu
+      </Link>
       <Form method="POST" action="/order/new">
         <TableOrder cart={cart} />
         <div>
@@ -39,6 +51,7 @@ const CreateOrder = () => {
             value={JSON.stringify({ username: name, ...cart })}
             className="block"
           />
+
           <button
             disabled={isSubmitting}
             className="rounded bg-orange-600 px-4 py-2 font-medium text-white disabled:opacity-50"

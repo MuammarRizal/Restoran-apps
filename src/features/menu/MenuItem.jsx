@@ -25,7 +25,7 @@ export const MenuItem = ({ menu }) => {
   };
 
   return (
-    <div className="rounded-lg bg-white p-2 text-center shadow transition-all hover:shadow-lg">
+    <div className="rounded-lg bg-orange-300 p-2 text-center shadow transition-all hover:shadow-lg">
       <img
         src={`./ImageMenus/${image}`}
         alt={name}
@@ -37,9 +37,9 @@ export const MenuItem = ({ menu }) => {
           <h3 className="font-medium">{name}</h3>
 
           {inStock ? (
-            <p className="text-gray-400">Habis</p>
+            <p className="text-gray-700">Habis</p>
           ) : (
-            <p className="text-gray-400">Tersedia</p>
+            <p className="text-gray-700">Tersedia</p>
           )}
 
           <p className="line-clamp-1 text-sm opacity-50">

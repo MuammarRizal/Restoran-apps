@@ -7,7 +7,7 @@ const Menu = () => {
   const menu = useLoaderData();
   return (
     <>
-      <div className="container relative flex">
+      <div className="container relative flex gap-4">
         <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
           {menu.map((item) => (
             <MenuItem key={item.id} menu={item} />
