@@ -10,14 +10,8 @@ import {
 import EmptyCart from "../cart/EmptyCart";
 import { createOrder } from "../../services/apiRestaurant";
 import store from "../../store";
-import { clearCart, getTotalCartPrice } from "../cart/cartSlice";
-import { formatCurrency } from "../../utils/helpers";
+import { clearCart } from "../cart/cartSlice";
 import TableOrder from "../TableOrder/TableOrder";
-
-const isValidPhone = (str) =>
-  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str,
-  );
 
 const CreateOrder = () => {
   const name = useSelector((state) => state.user.name);
@@ -74,6 +68,7 @@ export async function action({ request }) {
 
   const order = {
     username: parseData.username,
+    process: false,
     cart: cartMenus,
   };
 

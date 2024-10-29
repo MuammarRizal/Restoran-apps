@@ -104,12 +104,14 @@ const KitchenOrders = () => {
                           : "Tidak Memesan Minuman"}
                       </td>
                       <td className="px-4 py-2 text-center font-bold">
-                        <span
-                          className={`inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-600`}
-                        >
-                          <FaSync className="mr-1 animate-spin" />
-                          Process
-                        </span>
+                        <button>
+                          <span
+                            className={`inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-600`}
+                          >
+                            <FaSync className="mr-1 animate-spin" />
+                            Process
+                          </span>
+                        </button>
                       </td>
                     </tr>
                   );
@@ -119,6 +121,7 @@ const KitchenOrders = () => {
           </table>
         </div>
 
+        {/* delivery */}
         <h3 className="mb-2 mt-4 text-center text-2xl font-bold text-gray-800 md:text-left">
           Delivery
         </h3>
@@ -182,14 +185,12 @@ const KitchenOrders = () => {
                           : "Tidak Memesan Minuman"}
                       </td>
                       <td className="px-4 py-2 text-center font-bold">
-                        <td className="px-4 py-2 text-center font-bold">
-                          <span
-                            className={`inline-flex items-center rounded-full bg-green-100  px-3 py-1 text-xs font-medium text-green-600`}
-                          >
-                            <IoFastFood className="mr-1" />
-                            Delivery
-                          </span>
-                        </td>
+                        <span
+                          className={`inline-flex items-center rounded-full bg-green-100  px-3 py-1 text-xs font-medium text-green-600`}
+                        >
+                          <IoFastFood className="mr-1" />
+                          Delivery
+                        </span>
                       </td>
                     </tr>
                   );

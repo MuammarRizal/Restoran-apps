@@ -1,38 +1,24 @@
 import React from "react";
 import { FaSync } from "react-icons/fa";
 import { IoFastFood } from "react-icons/io5";
+import useSWR from "swr";
+import LoadingPPKD from "../Kitchen/components/LoadingPPKD";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const DeliveryTable = () => {
-  const data = [
-    {
-      id: 1,
-      name: "Pemesan A",
-      order: "Makanan A",
-      status: "Dalam Proses",
-      estimatedTime: "30 menit",
-    },
-    {
-      id: 2,
-      name: "Pemesan B",
-      order: "Makanan B",
-      status: "Siap Diantar",
-      estimatedTime: "1 jam",
-    },
-    {
-      id: 3,
-      name: "Pemesan C",
-      order: "Makanan C",
-      status: "Dalam Proses",
-      estimatedTime: "45 menit",
-    },
-    // Tambahkan data lain jika diperlukan
-  ];
-
-  const handleStatusChange = (item) => {
-    // Implementasikan logika untuk mengubah status barang
-    console.log(`Status changed for item ID: ${item.id}`);
+  const getFoodAndDrinkItems = (cartJson) => {
+    const foodItems = cartJson
+      .filter((item) => item.category === "makanan")
+      .map((item) => item.name);
+    const drinkItems = cartJson
+      .filter((item) => item.category === "minuman")
+      .map((item) => item.name);
+    return { foodItems, drinkItems };
   };
 
+  const { data, error } = useSWR("http://localhost:5000/api/orders", fetcher);
+  const loading = !data && !error;
   return (
     <div className="flex-1 p-4 md:p-6">
       <h2 className="mb-6 text-center text-2xl font-extrabold text-gray-800 md:text-left">
@@ -48,9 +34,13 @@ const DeliveryTable = () => {
               <th className="px-4 py-3 text-center text-sm font-semibold uppercase tracking-wider md:px-6">
                 Nama Pemesan
               </th>
-              <th className="px-4 py-3 text-center text-sm font-semibold uppercase tracking-wider md:px-6">
+              <th
+                className="px-4 py-3 text-center text-sm font-semibold uppercase tracking-wider md:px-6"
+                colSpan={2}
+              >
                 Pesanan
               </th>
+
               <th className="px-4 py-3 text-center text-sm font-semibold uppercase tracking-wider md:px-6">
                 Estimasi Waktu
               </th>
@@ -60,41 +50,63 @@ const DeliveryTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
-              <tr
-                key={item.id}
-                className="border-b border-gray-200 bg-white text-gray-800 transition-all duration-200 ease-in-out hover:bg-gray-50 hover:shadow-lg"
-              >
-                <td className="px-4 py-3 text-center text-sm font-medium md:px-6">
-                  {item.id}
-                </td>
-                <td className="px-4 py-3 text-center text-sm font-semibold text-gray-700 md:px-6">
-                  {item.name}
-                </td>
-                <td className="px-4 py-3 text-center text-sm md:px-6">
-                  {item.order}
-                </td>
-                <td className="px-4 py-3 text-center text-sm md:px-6">
-                  {item.estimatedTime}
-                </td>
-                <td className="px-4 py-3 text-center text-sm font-semibold md:px-6">
-                  <span
-                    className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
-                      item.status === "Siap Diantar"
-                        ? "bg-green-100 text-green-600"
-                        : "bg-yellow-100 text-yellow-600"
-                    }`}
-                  >
-                    {item.status === "Siap Diantar" ? (
-                      <IoFastFood className="mr-1" />
-                    ) : (
-                      <FaSync className="mr-1 animate-spin" />
-                    )}
-                    {item.status}
-                  </span>
+            {loading ? (
+              <tr>
+                <td colSpan={5} className="px-4 py-6">
+                  <LoadingPPKD />
                 </td>
               </tr>
-            ))}
+            ) : (
+              data?.orders.map((item, index) => {
+                const cartJson = JSON.parse(item.cart);
+
+                const { foodItems, drinkItems } =
+                  getFoodAndDrinkItems(cartJson);
+
+                return (
+                  <tr
+                    key={item.id}
+                    className="border-b border-gray-200 bg-white text-gray-800 transition-all duration-200 ease-in-out hover:bg-gray-50 hover:shadow-lg"
+                  >
+                    <td className="px-4 py-3 text-center text-sm font-medium md:px-6">
+                      {index + 1}
+                    </td>
+                    <td className="px-4 py-3 text-center text-sm font-semibold text-gray-700 md:px-6">
+                      {item.username}
+                    </td>
+                    <td className="px-4 py-2 text-sm md:px-6">
+                      {foodItems.length > 0
+                        ? foodItems.join(", ")
+                        : "Tidak Memesan Makanan"}
+                    </td>
+                    <td className="px-4 py-2 text-sm md:px-6">
+                      {drinkItems.length > 0
+                        ? drinkItems.join(", ")
+                        : "Tidak Memesan Minuman"}
+                    </td>
+                    <td className="px-4 py-3 text-center text-sm md:px-6">
+                      {Math.floor(Math.random() * 60) + 1} Menit
+                    </td>
+                    <td className="px-4 py-3 text-center text-sm font-semibold md:px-6">
+                      <span
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                          item.status === "Siap Diantar"
+                            ? "bg-green-100 text-green-600"
+                            : "bg-yellow-100 text-yellow-600"
+                        }`}
+                      >
+                        {item.status === "Siap Diantar" ? (
+                          <IoFastFood className="mr-1" />
+                        ) : (
+                          <FaSync className="mr-1 animate-spin" />
+                        )}
+                        <span>Proses</span>
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>

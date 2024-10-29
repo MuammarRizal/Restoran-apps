@@ -18,7 +18,7 @@ const MenuKitchen = () => {
           Menu
         </h2>
 
-        <hr class="my-4 border-gray-300" />
+        <hr className="my-4 border-gray-300" />
 
         <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left">
           Foods
@@ -97,7 +97,7 @@ const MenuKitchen = () => {
           </table>
         </div>
 
-        <hr class="my-4 border-gray-300" />
+        <hr className="my-4 border-gray-300" />
         <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left">
           Drinks
         </h2>

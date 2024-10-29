@@ -1,16 +1,7 @@
-import OrderItem from "./OrderItem";
-
-import { useFetcher, useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData, useNavigate } from "react-router-dom";
 import waitingGif from "../../assets/waitinggif.gif";
 import { getOrder } from "../../services/apiRestaurant";
-import {
-  calcMinutesLeft,
-  formatCurrency,
-  formatDate,
-} from "../../utils/helpers";
-import UpdateOrder from "./UpdateOrder";
 import { useEffect } from "react";
-import TableOrder from "../TableOrder/TableOrder";
 import { FaHourglassHalf, FaUtensils } from "react-icons/fa";
 import { clearCart } from "../cart/cartSlice";
 import { useDispatch } from "react-redux";
@@ -19,7 +10,7 @@ const Order = () => {
   const { detail } = useLoaderData();
   const fetcher = useFetcher();
   const dispatch = useDispatch();
-  // console.log(detail);
+  const navigate = useNavigate();
   useEffect(
     function () {
       if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu");
@@ -33,8 +24,8 @@ const Order = () => {
   const datas = JSON.parse(cart);
 
   const handlerPesan = () => {
+    navigate("/");
     dispatch(clearCart());
-    window.location.href = "/";
   };
 
   if (isLoading)
@@ -129,43 +120,6 @@ const Order = () => {
         Pesan Lagi
       </button>
     </div>
-
-    // <div className="space-y-8 px-4 py-6">
-    //   <div className="flex flex-wrap items-center justify-between gap-2">
-    //     <h2 className="text-xl font-semibold">Order #{id} status</h2>
-
-    //     {/* <div className="space-x-2">
-    //       {priority && (
-    //         <span className="rounded-full bg-red-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-red-50">
-    //           Priority
-    //         </span>
-    //       )}
-    //       <span className="rounded-full bg-green-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-green-50">
-    //         {status} order
-    //       </span>
-    //     </div> */}
-    //   </div>
-
-    //   <div className="flex flex-wrap items-center justify-between gap-2 bg-stone-200 px-6 py-5">
-    //     {/* <p className="font-medium">
-    //       {deliveryIn >= 0
-    //         ? `Pesanan Siap dalam ${calcMinutesLeft(estimatedDelivery)} Menit lagi 😃`
-    //         : "Pesanan siap diantar"}
-    //     </p>
-    //     <p className="text-xs text-stone-500">
-    //       (Perkiraan Selesai : {formatDate(estimatedDelivery)})
-    //     </p> */}
-    //   </div>
-
-    //   <ul className="dive-stone-200 divide-y border-b border-t">
-    //     {/* <TableOrder cart={cart} /> */}
-    //     {/* <OrderItem item={item} key={item.pizzaId} /> */}
-    //   </ul>
-
-    //   <div className="space-y-2 bg-stone-200 px-6 py-5">
-    //     <p className="font-bold">Mohon Ditunggu! 😃</p>
-    //   </div>
-    // </div>
   );
 };
 
