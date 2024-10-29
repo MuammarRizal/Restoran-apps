@@ -3,12 +3,13 @@ import useSWR from "swr";
 import Sidebar from "./Sidebar";
 import LoadingPPKD from "./LoadingPPKD";
 import Notifikasi from "./orderan.mp3";
+import { FaSync } from "react-icons/fa";
+import { IoFastFood } from "react-icons/io5";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const KitchenOrders = () => {
   const audioRef = useRef(new Audio(Notifikasi));
-  const [previousOrderCount, setPreviousOrderCount] = useState(0);
 
   const { data, error } = useSWR("http://localhost:5000/api/orders", fetcher);
   const loading = !data && !error;
@@ -32,71 +33,171 @@ const KitchenOrders = () => {
     if (data) {
       localStorage.setItem("prevlength", JSON.stringify(data.orders.length));
     }
-  }, [data, previousOrderCount]);
+  }, [data]);
 
   return (
-    <div className="fixed -ms-[3.7rem] -mt-10 flex w-full">
+    <div className="flex w-full flex-col md:flex-row">
       <Sidebar />
 
-      <div className="flex-1 p-6">
-        <h2 className="mb-4 text-2xl font-bold">Orderan</h2>
-        <table className="min-w-full border bg-white">
-          <thead>
-            <tr>
-              <th className="border-b px-4 py-2">ID</th>
-              <th className="border-b px-4 py-2">Pemesan</th>
-              <th className="border-b px-4 py-2">Makanan</th>
-              <th className="border-b px-4 py-2">Minuman</th>
-              <th className="border-b px-4 py-2">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
+      <div className="flex-1 p-4 md:p-6">
+        {/* sedang proses */}
+        <h3 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left">
+          Sedang Proses
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 rounded-lg border bg-white shadow-lg">
+            <thead className="bg-gray-100">
               <tr>
-                <td colSpan={5}>
-                  <LoadingPPKD />
-                </td>
+                <th className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  ID
+                </th>
+                <th className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  Pemesan
+                </th>
+                <th className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  Makanan
+                </th>
+                <th className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  Minuman
+                </th>
+                <th className="px-4 py-2 text-center text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  STATUS
+                </th>
               </tr>
-            ) : error ? (
-              <tr>
-                <td colSpan={5} className="py-4 text-center">
-                  Error fetching data
-                </td>
-              </tr>
-            ) : (
-              data.orders.map((order, index) => {
-                const cartJson = JSON.parse(order.cart);
-                const { foodItems, drinkItems } =
-                  getFoodAndDrinkItems(cartJson);
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan={5} className="px-4 py-6">
+                    <LoadingPPKD />
+                  </td>
+                </tr>
+              ) : error ? (
+                <tr>
+                  <td colSpan={5} className="py-4 text-center text-red-500">
+                    Error fetching data
+                  </td>
+                </tr>
+              ) : (
+                data.orders.map((order, index) => {
+                  const cartJson = JSON.parse(order.cart);
+                  const { foodItems, drinkItems } =
+                    getFoodAndDrinkItems(cartJson);
 
-                return (
-                  <tr key={order.id} className="border-b text-center">
-                    <td className="px-4 py-2">{index + 1}</td>
-                    <td className="px-4 py-2">{order.username}</td>
-                    <td className="px-4 py-2">
-                      {foodItems.length > 0
-                        ? foodItems.join(", ")
-                        : "Tidak Memesan Makanan"}
-                    </td>
-                    <td className="px-4 py-2">
-                      {drinkItems.length > 0
-                        ? drinkItems.join(", ")
-                        : "Tidak Memesan Minuman"}
-                    </td>
-                    <td className="px-4 py-2 font-bold">
-                      <button
-                        type="button"
-                        className="mb-2 me-2 rounded-lg bg-yellow-400 px-5 py-2.5 text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900"
-                      >
-                        {order.status || "Proses"}
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+                  return (
+                    <tr
+                      key={order.id}
+                      className="border-b text-gray-700 hover:bg-gray-50"
+                    >
+                      <td className="px-4 py-2 text-sm md:px-6">{index + 1}</td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {order.username}
+                      </td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {foodItems.length > 0
+                          ? foodItems.join(", ")
+                          : "Tidak Memesan Makanan"}
+                      </td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {drinkItems.length > 0
+                          ? drinkItems.join(", ")
+                          : "Tidak Memesan Minuman"}
+                      </td>
+                      <td className="px-4 py-2 text-center font-bold">
+                        <span
+                          className={`inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-600`}
+                        >
+                          <FaSync className="mr-1 animate-spin" />
+                          Process
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="mb-2 mt-4 text-center text-2xl font-bold text-gray-800 md:text-left">
+          Delivery
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 rounded-lg border bg-white shadow-lg">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  ID
+                </th>
+                <th className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  Pemesan
+                </th>
+                <th className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  Makanan
+                </th>
+                <th className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  Minuman
+                </th>
+                <th className="px-4 py-2 text-center text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan={5} className="px-4 py-6">
+                    <LoadingPPKD />
+                  </td>
+                </tr>
+              ) : error ? (
+                <tr>
+                  <td colSpan={5} className="py-4 text-center text-red-500">
+                    Error fetching data
+                  </td>
+                </tr>
+              ) : (
+                data.orders.map((order, index) => {
+                  const cartJson = JSON.parse(order.cart);
+                  const { foodItems, drinkItems } =
+                    getFoodAndDrinkItems(cartJson);
+
+                  return (
+                    <tr
+                      key={order.id}
+                      className="border-b text-gray-700 hover:bg-gray-50"
+                    >
+                      <td className="px-4 py-2 text-sm md:px-6">{index + 1}</td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {order.username}
+                      </td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {foodItems.length > 0
+                          ? foodItems.join(", ")
+                          : "Tidak Memesan Makanan"}
+                      </td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {drinkItems.length > 0
+                          ? drinkItems.join(", ")
+                          : "Tidak Memesan Minuman"}
+                      </td>
+                      <td className="px-4 py-2 text-center font-bold">
+                        <td className="px-4 py-2 text-center font-bold">
+                          <span
+                            className={`inline-flex items-center rounded-full bg-green-100  px-3 py-1 text-xs font-medium text-green-600`}
+                          >
+                            <IoFastFood className="mr-1" />
+                            Delivery
+                          </span>
+                        </td>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

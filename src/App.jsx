@@ -13,6 +13,7 @@ import KitchenPage from "./Kitchen/KitchenPage.jsx";
 import Orders from "./Kitchen/components/Orders.jsx";
 import KitchenOrders from "./Kitchen/components/Orders.jsx";
 import MenuKitchen from "./Kitchen/components/Menu.jsx";
+import DeliveryTable from "./Delivery/DeliveryTable.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -56,6 +57,10 @@ function App() {
         {
           path: "/kitchen/Menu",
           element: <MenuKitchen />,
+        },
+        {
+          path: "/delivery",
+          element: <DeliveryTable />,
         },
       ],
     },
