@@ -17,7 +17,10 @@ const DeliveryTable = () => {
     return { foodItems, drinkItems };
   };
 
-  const { data, error } = useSWR("http://localhost:5000/api/orders", fetcher);
+  const { data, error } = useSWR(
+    "http://192.168.88.191:5000/api/orders",
+    fetcher,
+  );
   const loading = !data && !error;
   return (
     <div className="flex-1 p-4 md:p-6">

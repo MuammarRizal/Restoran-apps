@@ -6,7 +6,10 @@ import LoadingPPKD from "./LoadingPPKD";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const MenuKitchen = () => {
-  const { data, error } = useSWR("http://localhost:5000/api/menus", fetcher);
+  const { data, error } = useSWR(
+    "http://192.168.88.191:5000/api/menus",
+    fetcher,
+  );
   const loading = !data && !error;
   const menuFoods = data?.menus.filter((item) => item.category === "makanan");
   const menuDrinks = data?.menus.filter((item) => item.category === "minuman");

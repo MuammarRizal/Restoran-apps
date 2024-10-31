@@ -11,7 +11,11 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 const KitchenOrders = () => {
   const audioRef = useRef(new Audio(Notifikasi));
 
-  const { data, error } = useSWR("http://localhost:5000/api/orders", fetcher);
+  const { data, error } = useSWR(
+    "http://192.168.88.191:5000/api/orders",
+    fetcher,
+    { refreshInterval: 2000 },
+  );
   const loading = !data && !error;
 
   const getFoodAndDrinkItems = (cartJson) => {
