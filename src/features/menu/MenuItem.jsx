@@ -12,6 +12,7 @@ export const MenuItem = ({ menu }) => {
   const currentQuantity = useSelector(getCurrentQuantityById(id));
   const isInCart = currentQuantity > 0;
 
+  const cart = useSelector((state) => state.cart.cart);
   const addToCart = () => {
     const newItem = {
       id,
@@ -21,13 +22,16 @@ export const MenuItem = ({ menu }) => {
       category,
       totalPrice: unitPrice * 1,
     };
+
     dispatch(addItem(newItem));
   };
+
+  console.log(cart.length);
 
   return (
     <div className="rounded-lg bg-orange-300 p-2 text-center shadow transition-all hover:shadow-lg">
       <img
-        src={`./ImageMenus/${image}`}
+        src={`./ImageMenus/${name}.jpg`}
         alt={name}
         className="mx-auto mb-2 h-[50%] w-full overflow-hidden object-cover"
       />
@@ -36,7 +40,7 @@ export const MenuItem = ({ menu }) => {
         <div className="mb-2">
           <h3 className="font-medium">{name}</h3>
 
-          {inStock ? (
+          {inStock.stock ? (
             <p className="text-gray-700">Habis</p>
           ) : (
             <p className="text-gray-700">Tersedia</p>
@@ -51,7 +55,7 @@ export const MenuItem = ({ menu }) => {
           <UpdateItemQuantity pizzaId={id} quantity={currentQuantity} />
         )}
 
-        {!inStock && !isInCart && (
+        {cart.length < 1 && (
           <button
             className="mt-2 w-full rounded bg-slate-600 py-1 text-white transition-all hover:bg-orange-600"
             onClick={addToCart}

@@ -11,8 +11,6 @@ const MenuKitchen = () => {
     fetcher,
   );
   const loading = !data && !error;
-  const menuFoods = data?.menus.filter((item) => item.category === "makanan");
-  const menuDrinks = data?.menus.filter((item) => item.category === "minuman");
   return (
     <div className="flex w-full flex-col md:flex-row">
       <Sidebar />
@@ -41,7 +39,7 @@ const MenuKitchen = () => {
                   Nama
                 </th>
                 <th className="px-4 py-2 text-center text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
-                  Kategori
+                  Item
                 </th>
                 <th className="px-4 py-2 text-center text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
                   Aksi
@@ -62,7 +60,7 @@ const MenuKitchen = () => {
                   </td>
                 </tr>
               ) : (
-                menuFoods.map((item, index) => {
+                data?.menus.map((item, index) => {
                   return (
                     <tr
                       key={item.id}
@@ -73,7 +71,7 @@ const MenuKitchen = () => {
                       </td>
                       <td className="px-4 py-3 text-center text-sm md:px-6">
                         <img
-                          src={`../../../public/ImageMenus/${item.image}`}
+                          src={`../../../public/ImageMenus/${item.name}.jpg`}
                           alt={item.name}
                           className="mx-auto w-32 rounded-md object-cover shadow-sm"
                         />
@@ -101,11 +99,11 @@ const MenuKitchen = () => {
         </div>
 
         <hr className="my-4 border-gray-300" />
-        <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left">
+        {/* <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left">
           Drinks
-        </h2>
+        </h2> */}
 
-        <div className="overflow-x-auto">
+        {/* <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-500 rounded-lg border bg-white shadow-lg">
             <thead className="bg-gray-100">
               <tr>
@@ -176,7 +174,7 @@ const MenuKitchen = () => {
               )}
             </tbody>
           </table>
-        </div>
+        </div> */}
       </div>
     </div>
   );

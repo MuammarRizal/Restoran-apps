@@ -24,7 +24,7 @@ const Order = () => {
   const datas = JSON.parse(cart);
 
   const handlerPesan = () => {
-    navigate("/");
+    window.location.href = "/";
     dispatch(clearCart());
   };
 

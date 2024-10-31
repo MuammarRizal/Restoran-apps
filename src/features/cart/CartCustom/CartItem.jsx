@@ -7,20 +7,33 @@ import UpdateItemQuantity from "./UpdateItemQuantity";
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
 
-  const { id, name, quantity, totalPrice } = item;
-
+  const { id, name, quantity, totalPrice, category } = item;
   const currentQuantity = useSelector(getCurrentQuantityById(id));
 
   return (
     <li className="py-3 sm:flex sm:items-center sm:justify-between">
-      <p className="mb-1 sm:mb-0">{name}</p>
-      <div className="flex items-center justify-between sm:gap-6">
-        <div className="rounded-lg bg-gray-200 p-1">
-          <UpdateItemQuantity id={id} quantity={currentQuantity} />
+      <div className="flex flex-col items-center justify-between sm:gap-6">
+        <div className="flex w-full items-center justify-between">
+          <div className=" flex w-full flex-col justify-between">
+            <p className="mb-1 text-2xl font-bold sm:mb-0">
+              {name.toUpperCase()}
+            </p>
+            <UpdateItemQuantity
+              id={id}
+              quantity={currentQuantity}
+              category={category}
+            />
+          </div>
+          <div className="div-baru">
+            <button
+              onClick={() => dispatch(removeItem(id))}
+              className="ms-3 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            >
+              <FiX />
+            </button>
+          </div>
         </div>
-        <button onClick={() => dispatch(removeItem(id))}>
-          <FiX />
-        </button>
+        <div className="rounded-lg bg-gray-200 p-1"></div>
       </div>
     </li>
   );
