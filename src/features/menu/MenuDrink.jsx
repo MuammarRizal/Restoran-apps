@@ -1,15 +1,21 @@
+import { formatCurrency } from "../../utils/helpers.js";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, getCurrentQuantityById } from "../cart/cartSlice.js";
+import UpdateItemQuantity from "../cart/UpdateItemQuantity.jsx";
+import { FaCheckCircle } from "react-icons/fa";
+import { MdErrorOutline } from "react-icons/md";
 
-export const MenuItem = ({ menu }) => {
+export const MenuDrink = ({ menu }) => {
   const dispatch = useDispatch();
 
   const { id, name, image, inStock, category, items } = menu;
   const stockJson = JSON.parse(inStock);
+
   const unitPrice = 1;
 
   const currentQuantity = useSelector(getCurrentQuantityById(id));
   const isInCart = currentQuantity > 0;
+
   const cart = useSelector((state) => state.cart.cart);
   const addToCart = () => {
     const newItem = {
@@ -23,6 +29,7 @@ export const MenuItem = ({ menu }) => {
       items,
     };
 
+    console.log(menu);
     dispatch(addItem(newItem));
   };
 
@@ -60,18 +67,8 @@ export const MenuItem = ({ menu }) => {
             Habis
           </p>
         )}
-
         <div className="mt-4">
-          <p className="font-semibold">Makanan:</p>
-          <ul className="ml-4 list-disc">
-            {items.food.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-2">
-          <p className="font-semibold">Dessert:</p>
-          <p className="ml-4">{items.dessert}</p>
+          <p className="font-semibold">{items.description}</p>
         </div>
       </div>
       <div className="mt-4 flex items-center justify-between">
@@ -91,42 +88,3 @@ export const MenuItem = ({ menu }) => {
     </div>
   );
 };
-
-// kaga kepake
-
-// <div className="rounded-lg bg-orange-300 p-2 text-center shadow transition-all hover:shadow-lg">
-//   <img
-//     src={`./ImageMenus/${name}.jpg`}
-//     alt={name}
-//     className="mx-auto mb-2 h-[50%] w-full overflow-hidden object-cover"
-//   />
-
-//   <div className="menu-body">
-//     <div className="mb-2">
-//       <h3 className="font-medium">{name}</h3>
-
-//       {inStock.stock ? (
-//         <p className="text-gray-700">Habis</p>
-//       ) : (
-//         <p className="text-gray-700">Tersedia</p>
-//       )}
-
-//       <p className="line-clamp-1 text-sm opacity-50">
-//         {/* {category.charAt(0).toUpperCase() + category.slice(1)} */}
-//       </p>
-//     </div>
-
-//     {isInCart && (
-//       <UpdateItemQuantity pizzaId={id} quantity={currentQuantity} />
-//     )}
-
-//     {cart.length < 1 && (
-//       <button
-//         className="mt-2 w-full rounded bg-slate-600 py-1 text-white transition-all hover:bg-orange-600"
-//         onClick={addToCart}
-//       >
-//         Tambahkan
-//       </button>
-//     )}
-//   </div>
-// </div>

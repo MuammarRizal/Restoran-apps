@@ -14,6 +14,7 @@ import Orders from "./Kitchen/components/Orders.jsx";
 import KitchenOrders from "./Kitchen/components/Orders.jsx";
 import MenuKitchen from "./Kitchen/components/Menu.jsx";
 import DeliveryTable from "./Delivery/DeliveryTable.jsx";
+import Barista from "./Kitchen/components/Barista.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -51,8 +52,12 @@ function App() {
           element: <KitchenPage />,
         },
         {
-          path: "/kitchen/orders",
+          path: "/kitchen/tataboga/orders",
           element: <KitchenOrders />,
+        },
+        {
+          path: "/kitchen/barista/orders",
+          element: <Barista />,
         },
         {
           path: "/kitchen/Menu",

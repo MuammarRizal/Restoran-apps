@@ -12,10 +12,10 @@ const CartItem = ({ item }) => {
 
   return (
     <li className="py-3 sm:flex sm:items-center sm:justify-between">
-      <div className="flex flex-col items-center justify-between sm:gap-6">
+      <div className="flex w-full flex-col items-center justify-between sm:gap-6">
         <div className="flex w-full items-center justify-between">
           <div className=" flex w-full flex-col justify-between">
-            <p className="mb-1 text-2xl font-bold sm:mb-0">
+            <p className="text-1xl mb-1 font-bold sm:mb-0">
               {name.toUpperCase()}
             </p>
             <UpdateItemQuantity
@@ -27,7 +27,7 @@ const CartItem = ({ item }) => {
           <div className="div-baru">
             <button
               onClick={() => dispatch(removeItem(id))}
-              className="ms-3 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+              className="mb-2 me-2 rounded-lg bg-red-700 px-5 py-2 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
             >
               <FiX />
             </button>

@@ -1,29 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import useSWR from "swr";
 import LoadingPPKD from "./LoadingPPKD";
+import { Link } from "react-router-dom";
+const apiUrl = import.meta.env.LOCAL_NETWORK_API;
+const apiLocalhost = import.meta.env.LOCALHOST;
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const MenuKitchen = () => {
-  const { data, error } = useSWR(
-    "http://192.168.88.191:5000/api/menus",
-    fetcher,
-  );
+  // Production
+  const { data, error } = useSWR(`${apiUrl}/menus`, fetcher, {
+    // const { data: menu, error } = useSWR(`${apiLocalhost}/menus`, fetcher, {
+      refreshInterval: 3000, 
+    });
+
+  // Localhost
+  // const { data, error } = useSWR("http://localhost:5000/api/menus", fetcher);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   const loading = !data && !error;
   return (
-    <div className="flex w-full flex-col md:flex-row">
-      <Sidebar />
+    <div className="flex w-full flex-col">
+      {/* Navbar */}
+      <nav className="bg-gray-800 text-white shadow-lg">
+        <div className="container mx-auto flex items-center justify-between px-4 py-3">
+          <div className="text-lg font-bold">Open Kedai</div>
+          <div className="hidden items-center gap-4 md:flex">
+            <Link to="/kitchen/orders" className="block hover:text-gray-300">
+              Order
+            </Link>
+            <Link to="/kitchen/Menu" className="block hover:text-gray-300">
+              Menus
+            </Link>
+          </div>
+        </div>
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="space-y-2 bg-gray-700 px-4 py-2 text-white md:hidden">
+            <Link to="/kitchen/orders" className="block hover:text-gray-300">
+              Order
+            </Link>
+            <Link to="/kitchen/Menu" className="block hover:text-gray-300">
+              Menus
+            </Link>
+          </div>
+        )}
+      </nav>
+
       <div className="flex-1 p-4 md:p-6">
-        <h2 className="mb-4 text-center text-4xl font-bold text-gray-800 md:text-left">
+        <h3 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left">
           Menu
-        </h2>
-
-        <hr className="my-4 border-gray-300" />
-
-        <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:text-left">
-          Foods
-        </h2>
+        </h3>
 
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-500 rounded-lg border bg-white shadow-lg">
@@ -42,7 +72,7 @@ const MenuKitchen = () => {
                   Item
                 </th>
                 <th className="px-4 py-2 text-center text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3">
-                  Aksi
+                  Dessert
                 </th>
               </tr>
             </thead>
@@ -80,15 +110,15 @@ const MenuKitchen = () => {
                         {item.name}
                       </td>
                       <td className="px-4 py-3 text-center text-sm md:px-6">
-                        {item.category}
+                        <p className="font-semibold">{item.items.title}</p>
+                        <ul className=" text-gray-600">
+                          {item.items.food.map((food, idx) => (
+                            <li key={idx}>- {food}</li>
+                          ))}
+                        </ul>
                       </td>
-                      <td className="px-4 py-3 text-center font-bold">
-                        <button
-                          type="button"
-                          className="inline-block rounded-full bg-red-700 px-4 py-1.5 text-xs font-medium text-white shadow-sm transition-all duration-300 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 md:text-sm dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        >
-                          Hapus
-                        </button>
+                      <td className="px-4 text-center">
+                        <p className="font-semibold">{item.items.dessert}</p>
                       </td>
                     </tr>
                   );

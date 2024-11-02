@@ -1,4 +1,4 @@
-import { useFetcher, useLoaderData, useNavigate } from "react-router-dom";
+import { redirect, useFetcher, useLoaderData, useNavigate } from "react-router-dom";
 import waitingGif from "../../assets/waitinggif.gif";
 import { getOrder } from "../../services/apiRestaurant";
 import { useEffect } from "react";
@@ -24,7 +24,8 @@ const Order = () => {
   const datas = JSON.parse(cart);
 
   const handlerPesan = () => {
-    window.location.href = "/";
+    // window.location.href = "/";
+    redirect('/')
     dispatch(clearCart());
   };
 

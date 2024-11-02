@@ -10,19 +10,29 @@ const TableOrder = ({ cart }) => {
             <th className="border-b px-4 py-3">NO</th>
             <th className="border-b px-4 py-3">MENU</th>
             <th className="border-b px-4 py-3">Quantity</th>
-            <th className="border-b px-4 py-3">KATEGORI</th>
+            <th className="border-b px-4 py-3">Item</th>
+            <th className="border-b px-4 py-3">Dessert</th>
           </tr>
         </thead>
         <tbody>
           {cart.map((item, index) => (
-            <tr className="hover:bg-gray-100" key={index}>
+            <tr className="hover:bg-gray-100" key={item.id}>
               <td className="border-b px-4 py-3 text-gray-800">{index + 1}</td>
               <td className="border-b px-4 py-3 text-gray-800">{item.name}</td>
               <td className="border-b px-4 py-3 text-gray-800">
                 {item.quantity}
               </td>
+
               <td className="border-b px-4 py-3 text-gray-800">
-                {item.category}
+                <p className="font-semibold">{item.items.title}</p>
+                <ul className="list-inside list-disc text-gray-600">
+                  {item.items.food.map((food, idx) => (
+                    <li key={idx}>{food}</li>
+                  ))}
+                </ul>
+              </td>
+              <td className="border-b px-4 py-3 text-gray-800">
+                {item.items.dessert}
               </td>
             </tr>
           ))}

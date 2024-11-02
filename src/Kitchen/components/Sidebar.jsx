@@ -1,30 +1,36 @@
 // src/components/Sidebar.js
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const Sidebar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <div className="sticky top-0 flex h-screen min-h-screen w-64 flex-col bg-gray-800 p-4 text-white">
-      <h2 className="mb-8 text-2xl font-bold">Dashboard</h2>
-      <nav className="flex flex-col gap-4">
-        <NavLink
-          to="/kitchen/orders"
-          className={({ isActive }) =>
-            `rounded p-2 ${isActive ? "bg-gray-700" : "hover:bg-gray-600"}`
-          }
-        >
-          Orderan
-        </NavLink>
-        <NavLink
-          to="/kitchen/menu"
-          className={({ isActive }) =>
-            `rounded p-2 ${isActive ? "bg-gray-700" : "hover:bg-gray-600"}`
-          }
-        >
-          Menu
-        </NavLink>
-      </nav>
-    </div>
+    <nav className="bg-gray-800 text-white shadow-lg">
+      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+        <div className="text-lg font-bold">Open Kedai</div>
+        <div className="hidden items-center gap-4 md:flex">
+          <Link to="/kitchen/orders" className="block hover:text-gray-300">
+            Order
+          </Link>
+          <Link to="/kitchen/Menu" className="block hover:text-gray-300">
+            Menus
+          </Link>
+        </div>
+        <div className="md:hidden"></div>
+      </div>
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="space-y-2 bg-gray-700 px-4 py-2 text-white md:hidden">
+          <Link to="/kitchen/orders" className="block hover:text-gray-300">
+            Order
+          </Link>
+          <Link to="/kitchen/Menu" className="block hover:text-gray-300">
+            Menus
+          </Link>
+        </div>
+      )}
+    </nav>
   );
 };
 
