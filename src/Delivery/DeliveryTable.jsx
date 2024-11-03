@@ -47,7 +47,7 @@ const DeliveryTable = () => {
         >
           <tr>
             <th className="px-4 py-3 text-center text-sm font-semibold uppercase tracking-wider md:px-6">
-              No
+              No Meja
             </th>
             <th className="px-4 py-3 text-center text-sm font-semibold uppercase tracking-wider md:px-6">
               Nama Pemesan
@@ -100,7 +100,7 @@ const DeliveryTable = () => {
                     className="border-b border-gray-200 bg-white text-gray-800 transition-all duration-200 ease-in-out hover:bg-gray-100 hover:shadow-md"
                   >
                     <td className="px-4 py-3 text-center text-sm font-medium md:px-6">
-                      {index + 1}
+                      {JSON.parse(item.data).table}
                     </td>
                     <td className="px-4 py-3 text-center text-xl font-semibold text-gray-700 md:px-6">
                       {item.username}

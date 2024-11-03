@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateName } from "./userSlice";
+import { updateName, updateTable } from "./userSlice";
+import Dropdown from "../../Kitchen/components/Dropdown";
 
 const CreateUser = ({ qr_code }) => {
   const [username, setUsername] = useState("");
+  const [meja, setMeja] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -12,6 +14,7 @@ const CreateUser = ({ qr_code }) => {
     e.preventDefault();
     if (!username) return;
 
+    dispatch(updateTable(meja));
     dispatch(updateName(username));
     navigate("/menu");
   }
@@ -32,8 +35,9 @@ const CreateUser = ({ qr_code }) => {
         placeholder="Nama Lengkap"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        className="mb-4 w-2/3 rounded-md border border-stone-200 p-2 focus:outline-none focus:ring focus:ring-orange-500 sm:w-1/2"
+        className="mb-4 me-3 w-2/3 rounded-md border border-stone-200 p-2 focus:outline-none focus:ring focus:ring-orange-500 sm:w-1/2"
       />
+      <Dropdown setMeja={setMeja} />
 
       {username !== "" && (
         <div>

@@ -94,14 +94,16 @@ const Barista = () => {
             <table className="min-w-full divide-y divide-gray-300 rounded-lg border bg-white shadow-lg">
               <thead className="bg-gray-100">
                 <tr>
-                  {["ID", "Pemesan", "Item", "Type", "STATUS"].map((header) => (
-                    <th
-                      key={header}
-                      className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3"
-                    >
-                      {header}
-                    </th>
-                  ))}
+                  {["no meja", "Pemesan", "Item", "Type", "STATUS"].map(
+                    (header) => (
+                      <th
+                        key={header}
+                        className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3"
+                      >
+                        {header}
+                      </th>
+                    ),
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -121,7 +123,9 @@ const Barista = () => {
                       key={order.id}
                       className="border-b text-gray-700 hover:bg-gray-50"
                     >
-                      <td className="px-4 py-2 text-sm md:px-6">{index + 1}</td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {JSON.parse(order.data).table}
+                      </td>
                       <td className="px-4 py-2 text-sm md:px-6">
                         {order.username}
                       </td>
@@ -169,14 +173,16 @@ const Barista = () => {
             <table className="min-w-full divide-y divide-gray-300 rounded-lg border bg-white shadow-lg">
               <thead className="bg-gray-100">
                 <tr>
-                  {["ID", "Pemesan", "Item", "Type", "STATUS"].map((header) => (
-                    <th
-                      key={header}
-                      className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3"
-                    >
-                      {header}
-                    </th>
-                  ))}
+                  {["no meja", "Pemesan", "Item", "Type", "STATUS"].map(
+                    (header) => (
+                      <th
+                        key={header}
+                        className="px-4 py-2 text-left text-xs font-medium uppercase text-gray-700 md:px-6 md:py-3"
+                      >
+                        {header}
+                      </th>
+                    ),
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -196,7 +202,9 @@ const Barista = () => {
                       key={order.id}
                       className="border-b text-gray-700 hover:bg-gray-50"
                     >
-                      <td className="px-4 py-2 text-sm md:px-6">{index + 1}</td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {JSON.parse(order.data).table}
+                      </td>
                       <td className="px-4 py-2 text-sm md:px-6">
                         {order.username}
                       </td>

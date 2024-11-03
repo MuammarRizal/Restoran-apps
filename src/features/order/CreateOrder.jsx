@@ -15,6 +15,7 @@ import TableOrder from "../TableOrder/TableOrder";
 
 const CreateOrder = () => {
   const name = useSelector((state) => state.user.name);
+  const meja = useSelector((state) => state.user.table);
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -37,12 +38,12 @@ const CreateOrder = () => {
         &larr; Back to menu
       </Link>
       <Form method="POST" action="/order/new">
-        <TableOrder cart={cart} />
+        <TableOrder cart={cart} meja={meja} />
         <div>
           <input
             type="hidden"
             name="cart"
-            value={JSON.stringify({ username: name, ...cart })}
+            value={JSON.stringify({ username: name, table: meja, ...cart })}
             className="block"
           />
 
@@ -77,6 +78,7 @@ export async function action({ request }) {
 
   const order = {
     username: parseData.username,
+    table: parseData.table,
     process: false,
     cart: cartMenus,
   };

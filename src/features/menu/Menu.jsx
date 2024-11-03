@@ -3,7 +3,7 @@ import { MenuItem } from "./MenuItem.jsx";
 import CartCustom from "../cart/CartCustom/CartCustom.jsx";
 import { MenuDrink } from "./MenuDrink.jsx";
 import { getMenu } from "../../services/apiRestaurant.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { ApiLocal } from "../../utils/localenv.js";
 const apiUrl = import.meta.env.LOCAL_NETWORK_API;
@@ -47,17 +47,25 @@ const Menu = () => {
   );
 
   return (
-    <div className="container relative flex gap-6 p-4">
-      <div className="w-full">
-        {renderCategory("food", MenuItem, "Food")}
-        {renderCategory("coffee", MenuDrink, "Coffee")}
-        {renderCategory("non-coffee", MenuDrink, "Non-Coffee")}
-      </div>
+    <>
+      <Link
+        to="/"
+        className="rounded-md px-3 py-2 font-medium text-orange-600 transition-all duration-300 ease-in-out hover:bg-orange-600 hover:text-white"
+      >
+        &larr; Back to input
+      </Link>
+      <div className="container relative flex gap-6 p-4">
+        <div className="w-full">
+          {renderCategory("food", MenuItem, "Food")}
+          {renderCategory("coffee", MenuDrink, "Coffee")}
+          {renderCategory("non-coffee", MenuDrink, "Non-Coffee")}
+        </div>
 
-      <div className="sticky top-0 hidden h-screen w-[45%] overflow-y-auto rounded border border-gray-300 bg-slate-200 p-4 shadow-lg md:block">
-        <CartCustom />
+        <div className="sticky top-0 hidden h-screen w-[45%] overflow-y-auto rounded border border-gray-300 bg-slate-200 p-4 shadow-lg md:block">
+          <CartCustom />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

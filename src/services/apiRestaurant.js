@@ -24,11 +24,13 @@ export async function getOrder(id) {
 }
 
 export async function createOrder(newOrder) {
+  console.log(newOrder);
   try {
     const res = await fetch(`${API_URL}/order`, {
       method: "POST",
       body: JSON.stringify({
         username: newOrder.username,
+        table: newOrder.table,
         data: newOrder.cart,
       }),
       headers: {

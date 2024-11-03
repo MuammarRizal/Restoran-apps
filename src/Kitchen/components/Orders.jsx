@@ -80,7 +80,7 @@ const KitchenOrders = () => {
         <table className="min-w-full divide-y divide-gray-300 rounded-lg border bg-white shadow-lg">
           <thead className="bg-gray-100">
             <tr>
-              {["NO", "Pemesan", "Paket", "Item", "Dessert", "STATUS"].map(
+              {["NO meja", "Pemesan", "Paket", "Item", "Dessert", "STATUS"].map(
                 (header) => (
                   <th
                     key={header}
@@ -121,14 +121,17 @@ const KitchenOrders = () => {
                 .map((order, index) => {
                   const cartJson = JSON.parse(order.cart);
                   const dataJson = JSON.parse(order.data);
-
+                  console.log(dataJson);
+                  console.log(dataJson);
                   const isProcessing = !dataJson.process;
                   return (
                     <tr
                       key={order.id}
                       className={`border-b text-gray-700 hover:bg-gray-50 ${isProcessing ? "bg-yellow-100" : "bg-green-100"}`}
                     >
-                      <td className="px-4 py-2 text-sm md:px-6">{index + 1}</td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {JSON.parse(order.data).table}
+                      </td>
                       <td className="px-4 py-2 text-sm md:px-6">
                         {order.username}
                       </td>
