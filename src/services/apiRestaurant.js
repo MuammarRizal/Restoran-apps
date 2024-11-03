@@ -47,9 +47,27 @@ export async function createOrder(newOrder) {
 
 export async function updateOrder(id, updateObj) {
   try {
-    const res = await fetch(`${API_URL}/order/${id}`, {
+    const res = await fetch(`${API_URL}/updateorder/${id}`, {
       method: "PATCH",
       body: JSON.stringify(updateObj),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) throw Error();
+  } catch (err) {
+    throw Error("Failed updating your order");
+  }
+}
+
+export async function updateQuantity(id, quantity) {
+  try {
+    const res = await fetch(`${API_URL}/updateorder/${id}`, {
+      method: "put",
+      body: JSON.stringify({
+        quantity,
+      }),
       headers: {
         "Content-Type": "application/json",
       },

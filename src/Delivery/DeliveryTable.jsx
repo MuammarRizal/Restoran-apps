@@ -3,13 +3,14 @@ import { FaSpinner, FaSync } from "react-icons/fa";
 import { IoFastFood } from "react-icons/io5";
 import useSWR from "swr";
 import LoadingPPKD from "../Kitchen/components/LoadingPPKD";
+import LogoPPKD from "../assets/logo.png";
+import { ApiLocal } from "../utils/localenv";
 const apiUrl = import.meta.env.LOCAL_NETWORK_API;
 const apiLocalhost = import.meta.env.LOCALHOST;
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const DeliveryTable = () => {
-  // Fungsi untuk memisahkan item makanan dan minuman
   const getFoodAndDrinkItems = (cartJson) => {
     const foodItems = cartJson
       .filter((item) => item.category === "makanan")
@@ -20,23 +21,29 @@ const DeliveryTable = () => {
     return { foodItems, drinkItems };
   };
 
-  // Ambil data dari server
-  // const { data, error } = useSWR(`${apiUrl}/orders`, fetcher);
-  const { data, error } = useSWR("http://localhost:5000/api/orders", fetcher);
+  const { data, error } = useSWR(`${ApiLocal}/orders`, fetcher);
   const loading = !data && !error;
 
-  // Pisahkan pesanan selesai dan pesanan sedang dibuat
   const completedOrders =
     data?.orders.filter((item) => JSON.parse(item.data).process) || [];
   const inProcessOrders =
     data?.orders.filter((item) => !JSON.parse(item.data).process) || [];
 
-  // Fungsi untuk render tabel pesanan
   const renderOrdersTable = (orders, isCompleted) => (
-    <div className="mb-8">
-      <table className="min-w-full rounded-lg border bg-white shadow-lg">
+    <div className="">
+      <div className="header flex w-full items-center justify-between">
+        <h2 className="text-center text-2xl font-extrabold text-gray-800">
+          {isCompleted ? "Pesanan Telah Selesai" : "Pesanan Sedang Dibuat"}
+        </h2>
+        <img src={LogoPPKD} alt="Logo PPKD" className="mb-4 w-40" />
+      </div>
+      <table className="min-w-full rounded-lg border border-gray-300 bg-white shadow-xl transition-all duration-200 ease-in-out hover:shadow-2xl">
         <thead
-          className={`bg-gradient-to-r ${isCompleted ? "from-green-600 to-green-400" : "from-orange-600 to-orange-400"} text-white`}
+          className={`bg-gradient-to-r ${
+            isCompleted
+              ? "from-green-600 to-green-400"
+              : "from-orange-600 to-orange-400"
+          } text-white`}
         >
           <tr>
             <th className="px-4 py-3 text-center text-sm font-semibold uppercase tracking-wider md:px-6">
@@ -90,12 +97,12 @@ const DeliveryTable = () => {
                 return (
                   <tr
                     key={item.id}
-                    className="border-b border-gray-200 bg-white text-gray-800 transition-all duration-200 ease-in-out hover:bg-gray-50 hover:shadow-lg"
+                    className="border-b border-gray-200 bg-white text-gray-800 transition-all duration-200 ease-in-out hover:bg-gray-100 hover:shadow-md"
                   >
                     <td className="px-4 py-3 text-center text-sm font-medium md:px-6">
                       {index + 1}
                     </td>
-                    <td className="px-4 py-3 text-center text-sm font-semibold text-gray-700 md:px-6">
+                    <td className="px-4 py-3 text-center text-xl font-semibold text-gray-700 md:px-6">
                       {item.username}
                     </td>
                     <td className="px-4 py-3 text-center text-sm font-semibold text-gray-700 md:px-6">
@@ -106,13 +113,15 @@ const DeliveryTable = () => {
                             : `./ImageMenus/${cartJson[0].name}.jpg`
                         }
                         alt={cartJson.name}
-                        className="mx-auto mb-2 w-32 overflow-hidden rounded object-cover"
+                        className="mx-auto mb-2 h-24 w-24 overflow-hidden rounded-lg object-cover shadow-sm"
                       />
                     </td>
                     <td className="px-4 py-2 text-start text-sm md:px-6">
-                      <ul className="list-disc">
+                      <ul className="ml-4 list-disc">
                         {cartJson.map((item, index) => (
-                          <li key={index}> {item.name} </li>
+                          <li key={index} className="text-gray-600">
+                            {item.name}
+                          </li>
                         ))}
                       </ul>
                     </td>
@@ -121,7 +130,11 @@ const DeliveryTable = () => {
                     </td>
                     <td className="px-4 py-3 text-center text-sm font-semibold md:px-6">
                       <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${dataJson.process ? "bg-green-100 text-green-600" : "bg-yellow-100 text-yellow-600"}`}
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                          dataJson.process
+                            ? "bg-green-100 text-green-600"
+                            : "bg-yellow-100 text-yellow-600"
+                        }`}
                       >
                         {dataJson.process ? (
                           <span className="flex items-center justify-center gap-1 text-xl">
@@ -146,22 +159,16 @@ const DeliveryTable = () => {
   );
 
   return (
-    <div className="flex-1 p-4 md:p-6">
-      <h2 className="mb-6 text-center text-2xl font-extrabold text-gray-800 md:text-left">
+    <div className="flex-1">
+      <h2 className="text-center text-3xl font-extrabold text-gray-800">
         Proses Pesanan
       </h2>
 
       <div className="overflow-x-auto">
-        <h3 className="mb-4 text-lg font-bold text-gray-700">
-          Pesanan Sedang Dibuat
-        </h3>
         {renderOrdersTable(inProcessOrders, false)}
       </div>
 
       <div className="mt-8 overflow-x-auto">
-        <h3 className="mb-4 text-lg font-bold text-gray-700">
-          Pesanan Telah Selesai
-        </h3>
         {renderOrdersTable(completedOrders, true)}
       </div>
     </div>

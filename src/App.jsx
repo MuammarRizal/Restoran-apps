@@ -40,14 +40,6 @@ function App() {
           element: <CreateOrder />,
           action: createOrderAction,
         },
-
-        {
-          path: "/order/:orderId",
-          element: <Order />,
-          loader: orderLoader,
-          errorElement: <OrderError />,
-          action: updateOrderAction,
-        },
         {
           path: "/kitchen",
           element: <KitchenPage />,
@@ -68,11 +60,18 @@ function App() {
           path: "/delivery",
           element: <DeliveryTable />,
         },
-        {
-          path: "/validation",
-          element: <ValidationQR />,
-        },
       ],
+    },
+    {
+      path: "/order/:orderId",
+      element: <Order />,
+      loader: orderLoader,
+      errorElement: <OrderError />,
+      action: updateOrderAction,
+    },
+    {
+      path: "/validation",
+      element: <ValidationQR />,
     },
   ]);
 

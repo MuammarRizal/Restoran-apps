@@ -8,6 +8,7 @@ import { MdMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { extractAllowedWords } from "../../utils/helpers";
 import ConfirmModal from "./ConfirmModal"; // Import the custom modal
+import { ApiLocal } from "../../utils/localenv";
 const apiUrl = import.meta.env.LOCAL_NETWORK_API;
 const apiLocalhost = import.meta.env.LOCALHOST;
 
@@ -21,7 +22,7 @@ const KitchenOrders = () => {
   const audioRef = useRef(new Audio(Notifikasi));
 
   // const { data, error } = useSWR(`${apiUrl}/orders`, fetcher, {
-  const { data, error } = useSWR(`http://localhost:5000/api/orders`, fetcher, {
+  const { data, error } = useSWR(`${ApiLocal}/orders`, fetcher, {
     refreshInterval: 1000,
   });
   const loading = !data && !error;
@@ -252,7 +253,7 @@ const KitchenOrders = () => {
         onConfirm={() => {
           handlerProcess(selectedOrderId);
         }}
-        message="Apakah Anda yakin ingin menandai pesanan ini sebagai selesai?"
+        message="Apakah Anda yakin ingin menandai pesanan ini sebagai selesai ?"
       />
 
       {/* Render the orders tables */}

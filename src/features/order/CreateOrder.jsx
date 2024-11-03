@@ -8,7 +8,7 @@ import {
   useNavigation,
 } from "react-router-dom";
 import EmptyCart from "../cart/EmptyCart";
-import { createOrder } from "../../services/apiRestaurant";
+import { createOrder, updateQuantity } from "../../services/apiRestaurant";
 import store from "../../store";
 import { clearCart } from "../cart/cartSlice";
 import TableOrder from "../TableOrder/TableOrder";
@@ -65,6 +65,15 @@ export async function action({ request }) {
   const cartMenus = Object.values(parseData).filter(
     (item) => typeof item === "object",
   );
+
+  // tolong refactor kode ini
+  await Promise.all(
+    cartMenus.map(async (item) => {
+      await updateQuantity(item.id, item.quantity);
+    }),
+  );
+
+  // await updateQuantity(cartMenus.id,cart)
 
   const order = {
     username: parseData.username,

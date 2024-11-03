@@ -3,17 +3,15 @@ import Sidebar from "./Sidebar";
 import useSWR from "swr";
 import LoadingPPKD from "./LoadingPPKD";
 import { Link } from "react-router-dom";
-const apiUrl = import.meta.env.LOCAL_NETWORK_API;
-const apiLocalhost = import.meta.env.LOCALHOST;
-
+import { ApiLocal } from "../../utils/localenv";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const MenuKitchen = () => {
   // Production
-  const { data, error } = useSWR(`${apiUrl}/menus`, fetcher, {
+  const { data, error } = useSWR(`${ApiLocal}/menus`, fetcher, {
     // const { data: menu, error } = useSWR(`${apiLocalhost}/menus`, fetcher, {
-      refreshInterval: 3000, 
-    });
+    refreshInterval: 3000,
+  });
 
   // Localhost
   // const { data, error } = useSWR("http://localhost:5000/api/menus", fetcher);

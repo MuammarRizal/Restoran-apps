@@ -95,7 +95,7 @@ const Order = () => {
   return (
     <div className="flex flex-col items-center justify-center bg-gradient-to-r">
       {/* Animated Icon at the top */}
-      <div className="mb-4 animate-pulse text-blue-600">
+      <div className="mb-4 mt-2 animate-pulse text-blue-600">
         <FaUtensils size={50} />
       </div>
 
@@ -111,7 +111,7 @@ const Order = () => {
         <img
           src={waitingGif}
           alt="waiting gif"
-          className=" rounded-lg border border-gray-200 p-2 shadow-lg"
+          className=" h-full rounded-lg border border-gray-200 p-2 shadow-lg"
         />
       </div>
 

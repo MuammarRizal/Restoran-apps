@@ -3,6 +3,9 @@ import { MenuItem } from "./MenuItem.jsx";
 import CartCustom from "../cart/CartCustom/CartCustom.jsx";
 import { MenuDrink } from "./MenuDrink.jsx";
 import { getMenu } from "../../services/apiRestaurant.js";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { ApiLocal } from "../../utils/localenv.js";
 const apiUrl = import.meta.env.LOCAL_NETWORK_API;
 const apiLocalhost = import.meta.env.LOCALHOST;
 
@@ -12,8 +15,16 @@ const fetcher = async () => {
 };
 
 const Menu = () => {
+  const qr_code = localStorage.getItem("qr_code");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!qr_code) {
+      navigate("/validation");
+    }
+  }, [qr_code, navigate]); // Menambahkan dependensi qr_code dan navigate
+
   // Fetch data menggunakan SWR
-  const { data: menu, error } = useSWR(`${apiUrl}/menus`, fetcher, {
+  const { data: menu, error } = useSWR(`${ApiLocal}/menus`, fetcher, {
     // const { data: menu, error } = useSWR(`${apiLocalhost}/menus`, fetcher, {
     refreshInterval: 2000,
   });

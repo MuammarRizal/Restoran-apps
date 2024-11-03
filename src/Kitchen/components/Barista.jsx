@@ -8,6 +8,7 @@ import { MdMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { removeForbiddenWords } from "../../utils/helpers";
 import ConfirmModal from "./ConfirmModal";
+import { ApiLocal } from "../../utils/localenv";
 const apiUrl = import.meta.env.LOCAL_NETWORK_API;
 const apiLocalhost = import.meta.env.LOCALHOST;
 
@@ -23,7 +24,7 @@ const Barista = () => {
   // const { data, error } = useSWR(`${apiUrl}/orders`, fetcher, {
   //   refreshInterval: 2000,
   // });
-  const { data, error } = useSWR("http://localhost:5000/api/orders", fetcher, {
+  const { data, error } = useSWR(`${ApiLocal}/orders`, fetcher, {
     refreshInterval: 2000,
   });
 
@@ -267,7 +268,9 @@ const Barista = () => {
             handlerProcess(selectedOrderId);
             setIsModalOpen(false);
           }}
-          message={"Yakin dek pesanan nya udah selesai ?"}
+          message={
+            "Apakah Anda yakin ingin menandai pesanan ini sebagai selesai ?"
+          }
         />
       )}
     </div>
