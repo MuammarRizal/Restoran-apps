@@ -1,10 +1,16 @@
-import { redirect, useFetcher, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  redirect,
+  useFetcher,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import waitingGif from "../../assets/waitinggif.gif";
 import { getOrder } from "../../services/apiRestaurant";
 import { useEffect } from "react";
 import { FaHourglassHalf, FaUtensils } from "react-icons/fa";
 import { clearCart } from "../cart/cartSlice";
 import { useDispatch } from "react-redux";
+import { updateName } from "../user/userSlice";
 
 const Order = () => {
   const { detail } = useLoaderData();
@@ -17,7 +23,6 @@ const Order = () => {
     },
     [fetcher],
   );
-
   const isLoading = fetcher.state === "loading";
 
   const { id, data, cart, username } = detail;
@@ -25,8 +30,9 @@ const Order = () => {
 
   const handlerPesan = () => {
     // window.location.href = "/";
-    redirect('/')
-    dispatch(clearCart());
+    localStorage.clear();
+    dispatch(updateName(""));
+    navigate("/validation");
   };
 
   if (isLoading)

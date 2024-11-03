@@ -15,6 +15,7 @@ import KitchenOrders from "./Kitchen/components/Orders.jsx";
 import MenuKitchen from "./Kitchen/components/Menu.jsx";
 import DeliveryTable from "./Delivery/DeliveryTable.jsx";
 import Barista from "./Kitchen/components/Barista.jsx";
+import ValidationQR from "./ui/ValidationQR.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -66,6 +67,10 @@ function App() {
         {
           path: "/delivery",
           element: <DeliveryTable />,
+        },
+        {
+          path: "/validation",
+          element: <ValidationQR />,
         },
       ],
     },

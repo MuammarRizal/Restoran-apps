@@ -8,6 +8,8 @@ import { MdMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { extractAllowedWords } from "../../utils/helpers";
 import ConfirmModal from "./ConfirmModal"; // Import the custom modal
+const apiUrl = import.meta.env.LOCAL_NETWORK_API;
+const apiLocalhost = import.meta.env.LOCALHOST;
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -17,14 +19,11 @@ const KitchenOrders = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const audioRef = useRef(new Audio(Notifikasi));
-  const apiUrl = import.meta.env.LOCAL_NETWORK_API;
-  const apiLocalhost = import.meta.env.LOCALHOST;
-  
 
-  const { data, error } = useSWR(`${apiUrl}/orders`, fetcher, {
-    // const { data: menu, error } = useSWR(`${apiLocalhost}/orders`, fetcher, {
-      refreshInterval: 1000, 
-    });
+  // const { data, error } = useSWR(`${apiUrl}/orders`, fetcher, {
+  const { data, error } = useSWR(`http://localhost:5000/api/orders`, fetcher, {
+    refreshInterval: 1000,
+  });
   const loading = !data && !error;
 
   useEffect(() => {
@@ -105,17 +104,17 @@ const KitchenOrders = () => {
                   Error fetching data
                 </td>
               </tr>
-            ) : (orders.length ===0 ? (
+            ) : orders.length === 0 ? (
               <tr>
                 <td colSpan={6} className="text-center text-red-500">
-              <div className="flex justify-center items-center h-40 bg-gray-100 rounded-lg shadow-md">
-              <p className="text-gray-500 text-lg font-semibold">
-                Tidak ada pesanan saat ini
-              </p>
-            </div>
+                  <div className="flex h-40 items-center justify-center rounded-lg bg-gray-100 shadow-md">
+                    <p className="text-lg font-semibold text-gray-500">
+                      Tidak ada pesanan saat ini
+                    </p>
+                  </div>
                 </td>
               </tr>
-            ) :(
+            ) : (
               orders
                 .sort((a, b) => b.id - a.id)
                 .map((order, index) => {
@@ -126,7 +125,7 @@ const KitchenOrders = () => {
                   return (
                     <tr
                       key={order.id}
-                      className={`border-b text-gray-700 hover:bg-gray-50 ${isProcessing ? 'bg-yellow-100' : 'bg-green-100'}`}
+                      className={`border-b text-gray-700 hover:bg-gray-50 ${isProcessing ? "bg-yellow-100" : "bg-green-100"}`}
                     >
                       <td className="px-4 py-2 text-sm md:px-6">{index + 1}</td>
                       <td className="px-4 py-2 text-sm md:px-6">
@@ -135,14 +134,46 @@ const KitchenOrders = () => {
                       <td className="px-4 py-2 text-sm md:px-6">
                         {cartJson.map((item) => (
                           <div key={item.id}>
-                            <p className="font-semibold">{extractAllowedWords(["PAKET 1", "PAKET 2", "PAKET 3", "PAKET 4", "PAKET 5", "Nasi Liwet", "Ayam Teriyaki", "Ayam Katsu", "Ayam Rica-Rica", "Ayam Geprek"], item.name)}</p>
+                            <p className="font-semibold">
+                              {extractAllowedWords(
+                                [
+                                  "PAKET 1",
+                                  "PAKET 2",
+                                  "PAKET 3",
+                                  "PAKET 4",
+                                  "PAKET 5",
+                                  "Nasi Liwet",
+                                  "Ayam Teriyaki",
+                                  "Ayam Katsu",
+                                  "Ayam Rica-Rica",
+                                  "Ayam Geprek",
+                                ],
+                                item.name,
+                              )}
+                            </p>
                           </div>
                         ))}
                       </td>
                       <td className="px-4 py-2 text-sm md:px-6">
                         {cartJson.map((item) => (
                           <div key={item.id}>
-                            <p className="font-semibold">{extractAllowedWords(["PAKET 1", "PAKET 2", "PAKET 3", "PAKET 4", "PAKET 5", "Nasi Liwet", "Ayam Teriyaki", "Ayam Katsu", "Ayam Rica-Rica", "Ayam Geprek"], item.items.title)}</p>
+                            <p className="font-semibold">
+                              {extractAllowedWords(
+                                [
+                                  "PAKET 1",
+                                  "PAKET 2",
+                                  "PAKET 3",
+                                  "PAKET 4",
+                                  "PAKET 5",
+                                  "Nasi Liwet",
+                                  "Ayam Teriyaki",
+                                  "Ayam Katsu",
+                                  "Ayam Rica-Rica",
+                                  "Ayam Geprek",
+                                ],
+                                item.items.title,
+                              )}
+                            </p>
                             <ul className="list-inside list-disc text-gray-600">
                               {item.items.food.map((food, idx) => (
                                 <li key={idx}>{food}</li>
@@ -154,7 +185,9 @@ const KitchenOrders = () => {
                       <td className="px-4 py-2 text-sm md:px-6">
                         {cartJson.map((item) => (
                           <div key={item.id}>
-                            <p className="font-semibold">{item.items.dessert}</p>
+                            <p className="font-semibold">
+                              {item.items.dessert}
+                            </p>
                           </div>
                         ))}
                       </td>
@@ -176,7 +209,7 @@ const KitchenOrders = () => {
                     </tr>
                   );
                 })
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -184,8 +217,10 @@ const KitchenOrders = () => {
   );
 
   // Filter orders based on processing status
-  const processingOrders = data?.orders.filter(order => !JSON.parse(order.data).process) || [];
-  const completedOrders = data?.orders.filter(order => JSON.parse(order.data).process) || [];
+  const processingOrders =
+    data?.orders.filter((order) => !JSON.parse(order.data).process) || [];
+  const completedOrders =
+    data?.orders.filter((order) => JSON.parse(order.data).process) || [];
 
   return (
     <div className="flex w-full flex-col">

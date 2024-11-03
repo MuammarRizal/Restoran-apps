@@ -11,7 +11,6 @@ import ConfirmModal from "./ConfirmModal";
 const apiUrl = import.meta.env.LOCAL_NETWORK_API;
 const apiLocalhost = import.meta.env.LOCALHOST;
 
-
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Barista = () => {
@@ -21,17 +20,19 @@ const Barista = () => {
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const audioRef = useRef(new Audio(Notifikasi));
 
-  const { data, error } = useSWR(`${apiUrl}/orders`, fetcher, {
-    refreshInterval: 2000,
-  });
-  // const { data, error } = useSWR("http://localhost:5000/api/orders", fetcher, {
+  // const { data, error } = useSWR(`${apiUrl}/orders`, fetcher, {
   //   refreshInterval: 2000,
   // });
+  const { data, error } = useSWR("http://localhost:5000/api/orders", fetcher, {
+    refreshInterval: 2000,
+  });
 
   const loading = !data && !error;
 
   useEffect(() => {
-    const storedProcessStatus = JSON.parse(localStorage.getItem("processStatus") || "{}");
+    const storedProcessStatus = JSON.parse(
+      localStorage.getItem("processStatus") || "{}",
+    );
     setProcessStatus(storedProcessStatus);
   }, []);
 
@@ -39,7 +40,9 @@ const Barista = () => {
     const prevOrdersCount = Number(localStorage.getItem("prevlength_barista"));
 
     if (data?.orders.length > prevOrdersCount) {
-      audioRef.current.play().catch((error) => console.error("Error playing audio:", error));
+      audioRef.current
+        .play()
+        .catch((error) => console.error("Error playing audio:", error));
     }
 
     if (data) {
@@ -63,23 +66,29 @@ const Barista = () => {
   };
 
   const renderOrdersTable = () => {
-    const completedOrders = (data?.orders.filter((order) => processStatus[order.id]) || []).sort((a, b) => b.id - a.id);
-    const inProcessOrders = (data?.orders.filter((order) => !processStatus[order.id]) || []).sort((a, b) => b.id - a.id);
-  
+    const completedOrders = (
+      data?.orders.filter((order) => processStatus[order.id]) || []
+    ).sort((a, b) => b.id - a.id);
+    const inProcessOrders = (
+      data?.orders.filter((order) => !processStatus[order.id]) || []
+    ).sort((a, b) => b.id - a.id);
+
     return (
       <div className="p-4">
-        <h3 className="mb-4 text-2xl font-bold text-gray-800">Pesanan Sedang Dibuat</h3>
+        <h3 className="mb-4 text-2xl font-bold text-gray-800">
+          Pesanan Sedang Dibuat
+        </h3>
         <div className="overflow-x-auto">
           {loading ? (
             <LoadingPPKD />
           ) : error ? (
             <div className="text-center text-red-500">Error fetching data</div>
           ) : inProcessOrders.length === 0 ? (
-            <div className="flex justify-center items-center h-40 bg-gray-100 rounded-lg shadow-md">
-            <p className="text-gray-500 text-lg font-semibold">
-              Tidak ada pesanan saat ini
-            </p>
-          </div>
+            <div className="flex h-40 items-center justify-center rounded-lg bg-gray-100 shadow-md">
+              <p className="text-lg font-semibold text-gray-500">
+                Tidak ada pesanan saat ini
+              </p>
+            </div>
           ) : (
             <table className="min-w-full divide-y divide-gray-300 rounded-lg border bg-white shadow-lg">
               <thead className="bg-gray-100">
@@ -97,22 +106,37 @@ const Barista = () => {
               <tbody>
                 {inProcessOrders.map((order, index) => {
                   const cartJson = JSON.parse(order.cart);
-                  const food = ["Nasi Liwet", "Ayam Teriyaki", "Ayam Katsu", "Ayam Rica-Rica", "Ayam Geprek"];
+                  const food = [
+                    "Nasi Liwet",
+                    "Ayam Teriyaki",
+                    "Ayam Katsu",
+                    "Ayam Rica-Rica",
+                    "Ayam Geprek",
+                  ];
                   const type = ["food"];
-  
+
                   return (
-                    <tr key={order.id} className="border-b text-gray-700 hover:bg-gray-50">
+                    <tr
+                      key={order.id}
+                      className="border-b text-gray-700 hover:bg-gray-50"
+                    >
                       <td className="px-4 py-2 text-sm md:px-6">{index + 1}</td>
-                      <td className="px-4 py-2 text-sm md:px-6">{order.username}</td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {order.username}
+                      </td>
                       <td className="px-4 py-2 text-sm md:px-6">
                         {cartJson.map((item) => (
                           <div key={item.id}>
-                            <p className="font-semibold">{removeForbiddenWords(food, item.items.title)}</p>
+                            <p className="font-semibold">
+                              {removeForbiddenWords(food, item.items.title)}
+                            </p>
                           </div>
                         ))}
                       </td>
                       <td className="px-4 py-2 text-sm md:px-6">
-                        {cartJson.map((item) => removeForbiddenWords(type, item.items.category))}
+                        {cartJson.map((item) =>
+                          removeForbiddenWords(type, item.items.category),
+                        )}
                       </td>
                       <td className="px-4 py-2 font-bold">
                         <button onClick={() => openModal(order.id)}>
@@ -129,12 +153,14 @@ const Barista = () => {
             </table>
           )}
         </div>
-  
-        <h3 className="mt-8 mb-4 text-2xl font-bold text-gray-800">Pesanan Telah Selesai</h3>
+
+        <h3 className="mb-4 mt-8 text-2xl font-bold text-gray-800">
+          Pesanan Telah Selesai
+        </h3>
         <div className="overflow-x-auto">
           {completedOrders.length === 0 ? (
-              <div className="flex justify-center items-center h-40 bg-gray-100 rounded-lg shadow-md">
-              <p className="text-gray-500 text-lg font-semibold">
+            <div className="flex h-40 items-center justify-center rounded-lg bg-gray-100 shadow-md">
+              <p className="text-lg font-semibold text-gray-500">
                 Tidak ada pesanan saat ini
               </p>
             </div>
@@ -155,22 +181,37 @@ const Barista = () => {
               <tbody>
                 {completedOrders.map((order, index) => {
                   const cartJson = JSON.parse(order.cart);
-                  const food = ["Nasi Liwet", "Ayam Teriyaki", "Ayam Katsu", "Ayam Rica-Rica", "Ayam Geprek"];
+                  const food = [
+                    "Nasi Liwet",
+                    "Ayam Teriyaki",
+                    "Ayam Katsu",
+                    "Ayam Rica-Rica",
+                    "Ayam Geprek",
+                  ];
                   const type = ["food"];
-  
+
                   return (
-                    <tr key={order.id} className="border-b text-gray-700 hover:bg-gray-50">
+                    <tr
+                      key={order.id}
+                      className="border-b text-gray-700 hover:bg-gray-50"
+                    >
                       <td className="px-4 py-2 text-sm md:px-6">{index + 1}</td>
-                      <td className="px-4 py-2 text-sm md:px-6">{order.username}</td>
+                      <td className="px-4 py-2 text-sm md:px-6">
+                        {order.username}
+                      </td>
                       <td className="px-4 py-2 text-sm md:px-6">
                         {cartJson.map((item) => (
                           <div key={item.id}>
-                            <p className="font-semibold">{removeForbiddenWords(food, item.items.title)}</p>
+                            <p className="font-semibold">
+                              {removeForbiddenWords(food, item.items.title)}
+                            </p>
                           </div>
                         ))}
                       </td>
                       <td className="px-4 py-2 text-sm md:px-6">
-                        {cartJson.map((item) => removeForbiddenWords(type, item.items.category))}
+                        {cartJson.map((item) =>
+                          removeForbiddenWords(type, item.items.category),
+                        )}
                       </td>
                       <td className="px-4 py-2 font-bold">
                         <span className="inline-flex items-center rounded-full bg-green-600 px-3 py-1 text-xs font-medium text-white">
@@ -188,7 +229,7 @@ const Barista = () => {
       </div>
     );
   };
-  
+
   return (
     <div className="flex w-full flex-col">
       <nav className="bg-gray-800 text-white shadow-lg">

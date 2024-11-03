@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateName } from "./userSlice";
 
-const CreateUser = () => {
+const CreateUser = ({ qr_code }) => {
   const [username, setUsername] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,9 +18,14 @@ const CreateUser = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="mb-4 text-stone-600 md:text-base">
-        👋 Halo, Silahkan masukan nama Anda :
-      </p>
+      <div className="">
+        <h2 className="mb-4 text-2xl text-stone-600 md:text-base">
+          Kode Anda : PPKDJS-{qr_code}
+        </h2>
+        <p className="mb-4 text-stone-600 md:text-base">
+          👋 Halo, Silahkan masukan nama Anda :
+        </p>
+      </div>
 
       <input
         type="text"

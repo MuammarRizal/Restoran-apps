@@ -14,8 +14,8 @@ const fetcher = async () => {
 const Menu = () => {
   // Fetch data menggunakan SWR
   const { data: menu, error } = useSWR(`${apiUrl}/menus`, fetcher, {
-  // const { data: menu, error } = useSWR(`${apiLocalhost}/menus`, fetcher, {
-    refreshInterval: 3000, 
+    // const { data: menu, error } = useSWR(`${apiLocalhost}/menus`, fetcher, {
+    refreshInterval: 2000,
   });
 
   if (error) return <div>Error loading data...</div>;

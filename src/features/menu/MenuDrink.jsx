@@ -29,7 +29,6 @@ export const MenuDrink = ({ menu }) => {
       items,
     };
 
-    console.log(menu);
     dispatch(addItem(newItem));
   };
 
