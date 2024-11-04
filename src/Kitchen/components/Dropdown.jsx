@@ -5,7 +5,7 @@ const Dropdown = ({ setMeja }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Pilih Meja");
 
-  const options = ["Meja 1", "Meja 2", "Meja 3", "Meja 4"];
+  const options = ["Meja 1", "Meja 2", "Meja 3", "Meja 4", "Take Away"];
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
