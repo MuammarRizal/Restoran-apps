@@ -9,7 +9,7 @@ import { ApiLocal } from "../utils/localenv";
 // wifi rumah
 // const API_URL = "http://192.168.100.131:5000/api";
 
-const API_URL = ApiLocal;
+const API_URL = "https://141.11.160.38:3002/api";
 
 export async function getMenu() {
   const res = await fetch(`${API_URL}/menus`);
