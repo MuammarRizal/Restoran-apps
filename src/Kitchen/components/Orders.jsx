@@ -121,8 +121,6 @@ const KitchenOrders = () => {
                 .map((order, index) => {
                   const cartJson = JSON.parse(order.cart);
                   const dataJson = JSON.parse(order.data);
-                  console.log(dataJson);
-                  console.log(dataJson);
                   const isProcessing = !dataJson.process;
                   return (
                     <tr
@@ -232,17 +230,7 @@ const KitchenOrders = () => {
       <nav className="bg-gray-800 text-white shadow-lg">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div className="text-lg font-bold">Open Kedai</div>
-          <div className="hidden items-center gap-4 md:flex">
-            <Link to="/kitchen/orders" className="block hover:text-gray-300">
-              Order
-            </Link>
-            <Link to="/kitchen/Menu" className="block hover:text-gray-300">
-              Menu
-            </Link>
-            <Link to="/kitchen/reports" className="block hover:text-gray-300">
-              Reports
-            </Link>
-          </div>
+
           <button onClick={toggleMenu} className="md:hidden">
             <MdMenu size={24} />
           </button>
