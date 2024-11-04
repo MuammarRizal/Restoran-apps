@@ -1,9 +1,15 @@
 import axios from "axios";
+import { ApiLocal } from "../utils/localenv";
 // Localhost
 // const API_URL = "http://localhost:5000/api";
 
-// Production
-const API_URL = "http://192.168.88.191:5000/api";
+// Production local PPKD
+// const API_URL = "http://192.168.88.191:5000/api";
+
+// wifi rumah
+// const API_URL = "http://192.168.100.131:5000/api";
+
+const API_URL = ApiLocal;
 
 export async function getMenu() {
   const res = await fetch(`${API_URL}/menus`);

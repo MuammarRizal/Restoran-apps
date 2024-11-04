@@ -29,7 +29,6 @@ export const MenuItem = ({ menu }) => {
 
   // Cek jika ada item di cart yang namanya mengandung "PAKET"
   const hasPaketInCart = cart.some((item) => item.name.includes("PAKET"));
-
   return (
     <div className="max-w-sm overflow-hidden rounded bg-blue-200 p-5 text-gray-800 shadow-lg">
       <img
@@ -37,7 +36,6 @@ export const MenuItem = ({ menu }) => {
         src={`./ImageMenus/${image}`}
         alt={name}
       />
-
       <div className="container-items flex flex-col place-content-between">
         <div className="py-4">
           <h2 className="mb-2 text-xl font-bold">{items.title}</h2>

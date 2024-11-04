@@ -3,7 +3,7 @@ import { FaCaretDown } from "react-icons/fa";
 
 const Dropdown = ({ setMeja }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Meja 1");
+  const [selectedOption, setSelectedOption] = useState("Pilih Meja");
 
   const options = ["Meja 1", "Meja 2", "Meja 3", "Meja 4"];
 
@@ -22,7 +22,7 @@ const Dropdown = ({ setMeja }) => {
       <div>
         <a
           onClick={toggleDropdown}
-          className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-500 focus:bg-orange-500 focus:outline-none focus:ring-2"
           aria-haspopup="true"
           aria-expanded={isOpen}
         >

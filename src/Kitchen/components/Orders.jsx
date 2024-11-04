@@ -46,7 +46,7 @@ const KitchenOrders = () => {
     const dataDetail = data.orders.filter((item) => item.id === Number(id));
     const dataJson = JSON.parse(dataDetail[0].data);
     try {
-      const response = await fetch(`http://localhost:5000/api/order/${id}`, {
+      const response = await fetch(`${ApiLocal}/order/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
