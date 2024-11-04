@@ -1,9 +1,9 @@
 import axios from "axios";
 // Localhost
-const API_URL = "http://localhost:5000/api";
+// const API_URL = "http://localhost:5000/api";
 
 // Production
-// const API_URL = "http://192.168.88.191:5000/api";
+const API_URL = "http://192.168.88.191:5000/api";
 
 export async function getMenu() {
   const res = await fetch(`${API_URL}/menus`);
