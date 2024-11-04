@@ -9,6 +9,13 @@ import CreateOrder, {
   action as createOrderAction,
 } from "./features/order/CreateOrder.jsx";
 import { action as updateOrderAction } from "./features/order/UpdateOrder";
+import KitchenPage from "./Kitchen/KitchenPage.jsx";
+import Orders from "./Kitchen/components/Orders.jsx";
+import KitchenOrders from "./Kitchen/components/Orders.jsx";
+import MenuKitchen from "./Kitchen/components/Menu.jsx";
+import DeliveryTable from "./Delivery/DeliveryTable.jsx";
+import Barista from "./Kitchen/components/Barista.jsx";
+import ValidationQR from "./ui/ValidationQR.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -34,13 +41,37 @@ function App() {
           action: createOrderAction,
         },
         {
-          path: "/order/:orderId",
-          element: <Order />,
-          loader: orderLoader,
-          errorElement: <OrderError />,
-          action: updateOrderAction,
+          path: "/kitchen",
+          element: <KitchenPage />,
+        },
+        {
+          path: "/kitchen/tataboga/orders",
+          element: <KitchenOrders />,
+        },
+        {
+          path: "/kitchen/barista/orders",
+          element: <Barista />,
+        },
+        {
+          path: "/kitchen/Menu",
+          element: <MenuKitchen />,
+        },
+        {
+          path: "/delivery",
+          element: <DeliveryTable />,
         },
       ],
+    },
+    {
+      path: "/order/:orderId",
+      element: <Order />,
+      loader: orderLoader,
+      errorElement: <OrderError />,
+      action: updateOrderAction,
+    },
+    {
+      path: "/validation",
+      element: <ValidationQR />,
     },
   ]);
 

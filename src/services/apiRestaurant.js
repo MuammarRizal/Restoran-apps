@@ -1,12 +1,18 @@
-const API_URL = "https://react-fast-pizza-api.onrender.com/api";
+import axios from "axios";
+// Localhost
+const API_URL = "http://localhost:5000/api";
+
+// Production
+// const API_URL = "http://192.168.88.191:5000/api";
 
 export async function getMenu() {
-  const res = await fetch(`${API_URL}/menu`);
+  const res = await fetch(`${API_URL}/menus`);
 
   if (!res.ok) throw Error("Failed getting menu");
 
-  const { data } = await res.json();
-  return data;
+  const { menus } = await res.json();
+
+  return menus;
 }
 
 export async function getOrder(id) {
@@ -18,15 +24,21 @@ export async function getOrder(id) {
 }
 
 export async function createOrder(newOrder) {
+  console.log(newOrder);
   try {
     const res = await fetch(`${API_URL}/order`, {
       method: "POST",
-      body: JSON.stringify(newOrder),
+      body: JSON.stringify({
+        username: newOrder.username,
+        table: newOrder.table,
+        data: newOrder.cart,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
     });
 
+    // console.log(await res.text());
     if (!res.ok) throw Error();
     const { data } = await res.json();
     return data;
@@ -37,9 +49,27 @@ export async function createOrder(newOrder) {
 
 export async function updateOrder(id, updateObj) {
   try {
-    const res = await fetch(`${API_URL}/order/${id}`, {
+    const res = await fetch(`${API_URL}/updateorder/${id}`, {
       method: "PATCH",
       body: JSON.stringify(updateObj),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) throw Error();
+  } catch (err) {
+    throw Error("Failed updating your order");
+  }
+}
+
+export async function updateQuantity(id, quantity) {
+  try {
+    const res = await fetch(`${API_URL}/updateorder/${id}`, {
+      method: "put",
+      body: JSON.stringify({
+        quantity,
+      }),
       headers: {
         "Content-Type": "application/json",
       },

@@ -1,6 +1,6 @@
 import { formatCurrency } from "../../utils/helpers";
 
-const OrderItem = ({item}) => {
+const OrderItem = ({ item }) => {
   const { quantity, name, totalPrice } = item;
 
   return (
@@ -13,6 +13,6 @@ const OrderItem = ({item}) => {
       </div>
     </li>
   );
-}
+};
 
-export default OrderItem
+export default OrderItem;
