@@ -126,7 +126,7 @@ const DeliveryTable = () => {
                       </ul>
                     </td>
                     <td className="px-4 py-3 text-center text-sm md:px-6">
-                      {Math.floor(Math.random() * 60) + 1} Menit
+                      {Math.floor(Math.random() * 60) + 34} Menit
                     </td>
                     <td className="px-4 py-3 text-center text-sm font-semibold md:px-6">
                       <span
